@@ -76,7 +76,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 ?>
 
-<?php if(!empty($sanitized_name)&&!empty($sanitized_email)); ?>
+<?php if(!empty($sanitized_name) && !empty($sanitized_email)): ?>
     <div class="output">
     <h3>Sanitized output: </h3>
     <p>Name: <?php echo htmlspecialchars($sanitized_name, ENT_QUOTES, 'UTF-8');?></p>
