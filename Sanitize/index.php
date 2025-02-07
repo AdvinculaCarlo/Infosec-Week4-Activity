@@ -4,18 +4,22 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
     <title>Info Sys</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             text-align: center;
             margin: 50px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
         }
         .container {
             display: flex;
-            justify-content: center;
-            align-items: flex-start;
+            flex-direction: column;
+            align-items: center;
             gap: 20px;
         }
         .form-container {
@@ -23,52 +27,69 @@
             padding: 20px;
             border: 1px solid #ccc;
             border-radius: 5px;
-            background: #f9f9f9;
+            background: pink;
+            text-align: center;
         }
         .output-container {
             width: 300px;
-            margin-top: 20px;
             padding: 20px;
             border: 1px solid #ccc;
             border-radius: 5px;
-            background: #f9f9f9;
+            background: lightgreen;
+            text-align: center;
         }
         .output {
             font-weight: bold;
             color: blue;
+            background-color: lightblue;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            box-sizing: border-box;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            box-sizing: border-box;
+            background-color: yellow;
+        }
+        button:hover{
+            color: gray;
+        }
+        .sanitized-output, .output-name, .output-email {
+            color: darkblue;
         }
     </style>
-
-<div class="container">
-    <h2 class="form-container">My Form</h2>
-    
+</head>
+<body>
+    <div class="container">
+        <h2>My Form</h2>
         <div class="form-container">
             <form method="post" action="">
-            
                 <label for="name">Name:</label>
                 <input type="text" name="name" id="name" required>
-                <br><br>
                 <label for="email">Email:</label>
                 <input type="email" name="email" id="email" required>
-                <br><br>
                 <button type="submit">Submit</button>
             </form>
         </div>
-
+    </div>
 </body>
 </html>
 
 <?php
 // Function to sanitize input
-
 function sanitizeInput($data) {
-    $data = trim($data); // Remove unnecessary spaces before and after
-    $data = stripslashes($data); // Remove backslashes
-    $data = htmlspecialchars($data, ENT_QUOTES, 'UTF-8'); // Converts spec char to prevent XSS
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data, ENT_QUOTES, 'UTF-8');
     return $data;
 }
 
-$sanitized_name = $sanitized_email = ""; // Default empty values
+$sanitized_name = $sanitized_email = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $sanitized_name = sanitizeInput($_POST['name']);
@@ -76,10 +97,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 ?>
 
-<?php if(!empty($sanitized_name) && !empty($sanitized_email)): ?>
-    <div class="output">
-    <h3>Sanitized output: </h3>
-    <p>Name: <?php echo htmlspecialchars($sanitized_name, ENT_QUOTES, 'UTF-8');?></p>
-    <p>Email: <?php echo htmlspecialchars($sanitized_email, ENT_QUOTES, 'UTF-8');?></p>
+<?php if (!empty($sanitized_name) && !empty($sanitized_email)): ?>
+    <div class="output-container">
+        <h3 style="sanitized-output">Sanitized output:</h3>
+        <p style="output-name">Name: <?php echo htmlspecialchars($sanitized_name, ENT_QUOTES, 'UTF-8'); ?></p>
+        <p style="output-email">Email: <?php echo htmlspecialchars($sanitized_email, ENT_QUOTES, 'UTF-8'); ?></p>
     </div>
 <?php endif; ?>
+
