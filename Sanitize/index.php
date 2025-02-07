@@ -70,7 +70,7 @@ function sanitizeInput($data) {
 
 $sanitized_name = $sanitized_email = ""; // Default empty values
 
-if ($_SERVER["REQUEST_METHOD"]) == "POST" {
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $sanitized_name = sanitizeInput($_POST['name']);
     $sanitized_email = sanitizeInput($_POST['email']);
 }
